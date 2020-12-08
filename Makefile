@@ -18,8 +18,9 @@ $(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
 	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
 
 # Exercise for the reader
-# $(DATA)/01_data.Rds: ??
-#	??
+$(DATA)/01_data.Rds: $(SCRIPTS)/01_data.R
+	cd $(SCRIPTS); Rscript 01_data.R
+	
 
 
 ## Paper ----
@@ -32,10 +33,10 @@ $(PAPER)/paper.pdf: $(PAPER)/paper.md \
 
 ## Cleaning ----
 .PHONY: clean
-madedata := $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
-made := $(wildcard $(OUT)/*) \
+MADEDATA := $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
+MADE := $(wildcard $(OUT)/*) \
         $(SCRIPTS)/02_analysis.html \
-        $(madedata) \
+        $(MADEDATA) \
         $(PAPER)/paper.pdf        
 clean:
-	rm $(made)
+	rm $(MADE)
